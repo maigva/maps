@@ -24,7 +24,8 @@ A graphical visualization for rapid view of brain statistics using three differe
 
 [10k CERES](https://bimcv-csusp.github.io/3D-MI-Reports/brain-statistics/free-surfer/index_ceres.html)
 
-[PATwin] (https://maigva.github.io/maps/index_ca_departamentos.html)
+[PATwin] https://maigva.github.io/maigva/maps/blob/master/index_ca_departamentos.html
+
 
 
 ## References
