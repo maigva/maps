@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
-	<title> Mapa Coropletico PATWIN nº Informes </title>
+
+	<title> Mapa Coropletico COVID 19 nº Casos </title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+
 	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
-	
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 
@@ -26,7 +26,7 @@
 		}
 	</style>
 
-	<style>#map { width: 500px; height: 800px; } 
+	<style>#map { width: 500px; height: 800px; }
 .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
 .legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.5; }</style>
 </head>
@@ -78,7 +78,7 @@
  		L.marker([38.827937, 0.096302]).addTo(map).bindPopup('Hospital La Pedrera.').addTo(hospitals),
 	    L.marker([38.504711, -0.237011]).addTo(map).bindPopup('<b>HOSPITAL MARINA BAIXA DE LA VILA JOIOSA.</b><br> PRE: 4.9 - PRO: 4.9 - xHL7.WS: no - EPAT: 4.03').addTo(hospitals),
     	L.marker([38.477757, -0.798225]).addTo(map).bindPopup('<b>HOSPITAL VIRGEN DE LA SALUD DE ELDA </b><br> PRE: 4.11 - PRO: 4.11- xHL7.WS: 4.11 - EPAT: 4.11').addTo(hospitals),
-	    L.marker([38.403335, -0.530713]).addTo(map).bindPopup('Hospital San Vicente del Raspell.').addTo(hospitals),	
+	    L.marker([38.403335, -0.530713]).addTo(map).bindPopup('Hospital San Vicente del Raspell.').addTo(hospitals),
 	    L.marker([38.344312, -0.495715]).addTo(map).bindPopup('<b>HOSPITAL GENERAL DE ALICANTE</b><br> PRE: 4.9 - PRO: 4.9 - xHL7.WS: no - EPAT: 4.03').addTo(hospitals),
  		L.marker([38.388543, -0.434346]).addTo(map).bindPopup('<b>HOSPITAL SAN JUAN DE ALICANTE </b><br> PRE: 4.9 - PRO: 4.9 - xHL7.WS: no - EPAT: 4.03').addTo(hospitals),
 	    L.marker([38.255366, -0.716021]).addTo(map).bindPopup('Hospital Elx-Vinalopó').addTo(hospitals),
@@ -87,7 +87,7 @@
     	L.marker([38.006112, -0.657227]).addTo(map).bindPopup('<b>Hospital Torrevieja').addTo(hospitals);
 
 		// HL7 PETICION / RESULTADOS --> xHL7
-		// control that shows state info on hover 
+		// control that shows state info on hover
 		var info = L.control();
 
 		info.onAdd = function (map) {
@@ -97,10 +97,10 @@
 		};
 
 		info.update = function (props) {
-			this._div.innerHTML = '<h4>PATWIN - Memoria 2019</h4>' +  (props ?
-				'<b>' + props.name + '</b><br/>' + 
-				'Volumen de Usuarios: ' + props.usu_t + '<br/>' +
-				'Nº de Informes: ' + props.t_inf
+			this._div.innerHTML = '<h4>COVID 19 - Abril 2020</h4>' +  (props ?
+				'<b>' + props.name + '</b><br/>' +
+				'casos Covid: ' + props.usu_t + '<br/>' +
+				'Población: ' + props.t_inf
 				: 'Ubique el ratón sobre un departamento');
 		};
 
@@ -109,11 +109,11 @@
 
 		function getColor(d) {
 			return d > 100000 ? '#800026' :
-					d > 50000  ? '#BD0026' :
-					d > 20000  ? '#E31A1C' :
-					d > 10000  ? '#FC4E2A' :
-					d > 5000   ? '#FD8D3C' :
-					d > 2000   ? '#FEB24C' :
+					d > 750  ? '#BD0026' :
+					d > 625  ? '#E31A1C' :
+					d > 500  ? '#FC4E2A' :
+					d > 375   ? '#FD8D3C' :
+					d > 250   ? '#FEB24C' :
 					d > 100   ? '#FED976' :
 								'#3182BD';
 		}
@@ -125,7 +125,7 @@
 				color: 'white',
 				dashArray: '3',
 				fillOpacity: 0.5,
-				fillColor: getColor(feature.properties.t_inf)
+				fillColor: getColor(feature.properties.usu_t)
 			};
 		}
 
@@ -178,8 +178,8 @@
 		legend.onAdd = function (map) {
 
 			var div = L.DomUtil.create('div', 'info legend'),
-				grades = [0, 100, 2000, 5000, 10000, 15000, 20000, 30000],
-				labels = ["Nº informes "],
+				grades = [0, 125, 250, 375, 500, 625, 750, 875],
+				labels = ["Nº casos CoVid "],
 				from, to;
 
 			for (var i = 0; i < grades.length; i++) {
